@@ -29,14 +29,14 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
+        $user = $request->user();
         $data = $request->validate([
             "password" => "required|current_password:sanctum",
             "name" => "required|string|min:5",
-            "email" => "required|email|unique:users,email"
+            "email" => "required|email|unique:users,email,".$user->id
         ]);
         unset($data["password"]);
 
-        $user = $request->user();
         $user->update($data);
 
         return response()->json([
