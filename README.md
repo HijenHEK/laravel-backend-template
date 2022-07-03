@@ -5,18 +5,19 @@
 this is an API First Backend developed using laravel mysql and sacntum for authentification </br>
 A front end agnostic ready to use boilerplate for your next Mobile app or SPA
 
-## Features 
+## Features and Todo's
 
-- [ ] full authentication system : 
-    - [x] login, logout, register
-    - [ ] Email verification
-    - [ ] Social login
-- [x] profile management : 
-    - [x] fetch and update profile data
-    - [x] delete profile
-- [ ] password management : 
-    - [x] change password
-    - [ ] reset password
+- [x] authentication system
+- [x] profile fetch and update data
+- [ ] reset passwords
+- [ ] email verification
+- [ ] social login
+- [ ] user roles
+- [ ] user crud for admins
+- [ ] public upload example (profile picture)
+- [ ] local upload example : private attachments
+
+you can add suggestions by modifying this file :) 
 
 ## Installation 
 
@@ -37,12 +38,13 @@ and the app will be accessible by default via `localhost` as programmed in `dock
 #### locally ?
 
 you need to have 
+
 ```
 composer
 php ^8.0
 mysql
 ```
-then run
+then run these commands
 
 ```
 $ git clone https://github.com/hijenhek/laravel-backend-boilerplate 
