@@ -9,8 +9,8 @@ A front end agnostic ready to use boilerplate for your next Mobile app or SPA
 
 - [x] authentication system
 - [x] profile fetch and update data
-- [ ] reset passwords
-- [ ] email verification
+- [x] reset passwords
+- [x] email verification
 - [ ] social login
 - [ ] user roles
 - [ ] user crud for admins
