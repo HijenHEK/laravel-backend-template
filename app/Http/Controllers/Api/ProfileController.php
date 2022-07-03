@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class ProfileController extends Controller
 {
@@ -58,4 +59,22 @@ class ProfileController extends Controller
             "message" => "profile deleted successfully"
         ]);
     }
+
+
+
+    /**
+     * Verify the current profile email address
+     *
+     * @param  EmailVerificationRequest  $request
+     */
+
+    public function verify(EmailVerificationRequest $request)
+    {
+        $request->fulfill();
+        return response()->json([
+            'message' => 'email has been verified successfully'
+        ]);
+    }
+
+
 }

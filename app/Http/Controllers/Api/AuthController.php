@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -57,6 +58,9 @@ class AuthController extends Controller
         $data["password"] = Hash::make($data["password"]);
 
         $user = User::create($data);
+
+        event(new Registered($user));
+
 
         return response()->json([
             'message' => 'user registered successfully'
