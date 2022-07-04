@@ -42,6 +42,17 @@ Route::middleware('auth:sanctum')->group(function () {
         })->name('verified.check');
     });
 
+    // admin middleware group
+    Route::middleware('admin')->group(function () {
+
+        // returns verified if user can acceess it
+        Route::get('/admin', function () {
+            return response()->json([
+                'message' => 'admin'
+            ]);
+        })->name('admin.check');
+    });
+
 
 });
 
