@@ -18,7 +18,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next)
     {
 
-        abort_unless(!auth()->check() || auth()->user()?->isAdmin(), Response::HTTP_UNAUTHORIZED, 'You are not allowed to access this resource');
+        abort_unless(!auth()->check() || auth()->user()?->isAdmin(), Response::HTTP_UNAUTHORIZED, 'Ooops somthing went wrong! Maybe you are not allowed to perform this');
         return $next($request);
     }
 }

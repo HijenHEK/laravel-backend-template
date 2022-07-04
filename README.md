@@ -11,9 +11,9 @@ A front end agnostic ready to use boilerplate for your next Mobile app or SPA
 - [x] profile fetch and update data
 - [x] reset passwords
 - [x] email verification
-- [ ] social login
-- [ ] user roles
+- [x] user roles
 - [ ] user crud for admins
+- [ ] social login
 - [ ] public upload example (profile picture)
 - [ ] local upload example : private attachments
 
