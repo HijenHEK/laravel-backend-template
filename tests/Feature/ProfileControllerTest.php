@@ -17,6 +17,7 @@ class ProfileControllerTest extends TestCase
     public function test_user_can_get_his_profile()
     {
         $user = User::factory()->create();
+
         $this->actingAs($user);
 
         $res = $this->getJson(route('profile.show'));
