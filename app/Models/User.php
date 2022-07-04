@@ -13,6 +13,10 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, CanResetPassword;
 
+
+    CONST ROLE_USER = 0;
+    CONST ROLE_ADMIN = 1;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -42,4 +46,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function setRole(int $role = self::ROLE_USER) {
+        if(auth()->user() == $this && $this->role == self::ROLE_ADMIN) {
+            return;
+        }
+        $this->role = $role ;
+        $this->save();
+        return $this;
+    }
+
 }
