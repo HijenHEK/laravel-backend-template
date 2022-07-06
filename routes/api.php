@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\ProfilePictureController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/update', [ProfileController::class, 'update'])->name('profile.update');
         Route::post('/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::get('/verify/{id}/{hash}', [ProfileController::class, 'verify'])->name('verification.verify');
+
+        Route::get('/picture', [ProfilePictureController::class, 'show'])->name('profile.show');
+        Route::post('/picture', [ProfilePictureController::class, 'store'])->name('profile.store');
+        Route::delete('/picture', [ProfilePictureController::class, 'destroy'])->name('profile.destroy');
+
     });
     Route::prefix('password')->group(function () {
         Route::post('/update', [PasswordController::class, 'update'])->name('password.update');
