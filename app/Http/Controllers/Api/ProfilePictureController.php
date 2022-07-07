@@ -12,25 +12,31 @@ class ProfilePictureController extends Controller
     {
         return response()->json([
             "message" => "profile picture retrieved successfully",
-            "data" => request()->user()->getPicture()
+            "data" => request()->user()->getPictureUrl()
         ]);
-
     }
 
     public function store()
     {
-        $user = request()->user() ;
+
+        $user = request()->user();
         request()->validate([
             'picture' => 'required|file|mimes:png,jpg|max:4048'
         ]);
-
+        if($user->picture) {
+            $user->deletePicture();
+        }
         $picture = request()->file('picture');
 
-        Storage::disk('public')->put($user->id . '/' .$picture->getClientOriginalName(), $picture);
+        $path = Storage::disk('public')->put( $user->id . '/', $picture);
 
-        dd($user->id . '/' .$picture->getClientOriginalName());
+        $user->setPicture($path);
 
-        $user->setPicture();
+        return response()->json([
+            "message" => "profile picture saved successfully",
+            "data" => $user->getPictureUrl()
+        ]);
+
     }
 
     public function destroy()

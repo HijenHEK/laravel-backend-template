@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Storage;
 
 trait HasPicture
 {
@@ -13,13 +15,14 @@ trait HasPicture
         return $this;
     }
 
-    public function getPicture()
+    public function getPictureUrl()
     {
-        return $this->picture;
+        return url('/storage//' . $this->picture);
     }
 
     public function deletePicture()
     {
+        Storage::disk('public')->delete($this->picture);
         $this->picture = null;
         $this->save();
         return $this;
