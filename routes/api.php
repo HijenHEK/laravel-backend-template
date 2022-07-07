@@ -28,9 +28,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::get('/verify/{id}/{hash}', [ProfileController::class, 'verify'])->name('verification.verify');
 
-        Route::get('/picture', [ProfilePictureController::class, 'show'])->name('profile.show');
-        Route::post('/picture', [ProfilePictureController::class, 'store'])->name('profile.store');
-        Route::delete('/picture', [ProfilePictureController::class, 'destroy'])->name('profile.destroy');
+        Route::get('/picture', [ProfilePictureController::class, 'show'])->name('profile.picutre.show');
+        Route::post('/picture', [ProfilePictureController::class, 'store'])->name('profile.picutre.store');
+        Route::delete('/picture', [ProfilePictureController::class, 'destroy'])->name('profile.picutre.destroy');
 
     });
     Route::prefix('password')->group(function () {

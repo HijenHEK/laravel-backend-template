@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class UserController extends Controller
     {
         return response()->json([
             'message' => 'users retrieved successfully',
-            "users" => User::paginate(20)
+            "users" => UserResource::collection(User::paginate(20))->response()->getData(true)
         ]);
     }
 
@@ -47,7 +48,7 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'user added successfully',
-            "data" => $user
+            "data" => UserResource::make($user)
         ]);
     }
 
@@ -61,7 +62,7 @@ class UserController extends Controller
     {
         return response()->json([
             "message" => "user retrieved successfully",
-            "data" => $user
+            "data" => UserResource::make($user)
         ]);
     }
 
@@ -88,7 +89,7 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'user updated successfully',
-            "data" => $user
+            "data" => UserResource::make($user)
         ]);
     }
 
