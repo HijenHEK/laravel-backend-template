@@ -17,7 +17,7 @@ trait HasPicture
 
     public function getPictureUrl()
     {
-        return url('storage/' . $this->picture);
+        return $this->picture ? url('storage/' . $this->picture) : null ;
     }
 
     public function deletePicture()
