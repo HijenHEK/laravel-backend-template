@@ -17,12 +17,14 @@ trait HasPicture
 
     public function getPictureUrl()
     {
-        return url('/storage//' . $this->picture);
+        return url('storage/' . $this->picture);
     }
 
     public function deletePicture()
     {
-        Storage::disk('public')->delete($this->picture);
+        if($this->picture) {
+            Storage::disk('public')->delete($this->picture);
+        }
         $this->picture = null;
         $this->save();
         return $this;
