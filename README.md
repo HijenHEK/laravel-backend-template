@@ -14,7 +14,7 @@ A front end agnostic ready to use boilerplate for your next Mobile app or SPA
 - [x] user roles
 - [x] user crud for admins
 - [ ] social login
-- [ ] public upload example (profile picture)
+- [x] public upload example (profile picture)
 - [ ] local upload example : private attachments
 
 you can add suggestions by modifying this file :) 
