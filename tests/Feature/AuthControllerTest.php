@@ -88,6 +88,23 @@ class AuthControllerTest extends TestCase
 
     }
 
+        /**
+     * Token test
+     *
+     * @return void
+     */
+    public function test_user_can_generate_a_new_token()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->postJson(route("token"));
+
+        $response->assertOk();
+        $response->assertJsonPath("message" , "Token generated successfully");
+
+    }
+
     /**
      * Logout test
      *

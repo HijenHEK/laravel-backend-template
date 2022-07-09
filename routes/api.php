@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/token', [AuthController::class, 'token'])->name('token');
 
     Route::prefix('profile')->group(function () {
         Route::get('/', [ProfileController::class, 'show'])->name('profile.show');
