@@ -63,9 +63,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role === self::ROLE_ADMIN;
     }
 
-
-    public function ownedAttachments()
+    /**
+     * User owned attachment
+     */
+    public function uploads()
     {
-        return $this->hasMany(Attachments::class , 'owner_id');
+        return $this->hasMany(Attachment::class , 'owner_id');
     }
 }
