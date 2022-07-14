@@ -15,8 +15,8 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasApiTokens, HasFactory, Notifiable, CanResetPassword, HasPicture;
 
 
-    CONST ROLE_USER = 0;
-    CONST ROLE_ADMIN = 1;
+    const ROLE_USER = 0;
+    const ROLE_ADMIN = 1;
 
     /**
      * The attributes that are mass assignable.
@@ -48,11 +48,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function setRole(int $role = self::ROLE_USER) {
-        if(auth()->user() == $this && $this->role == self::ROLE_ADMIN) {
+    public function setRole(int $role = self::ROLE_USER)
+    {
+        if (auth()->user() == $this && $this->role == self::ROLE_ADMIN) {
             return;
         }
-        $this->role = $role ;
+        $this->role = $role;
         $this->save();
         return $this;
     }
@@ -62,4 +63,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role === self::ROLE_ADMIN;
     }
 
+    /**
+     * User owned attachment
+     */
+    public function uploads()
+    {
+        return $this->hasMany(Attachment::class , 'owner_id');
+    }
 }

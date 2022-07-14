@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AttachmentController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\ProfileController;
@@ -34,10 +35,18 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/picture', [ProfilePictureController::class, 'destroy'])->name('profile.picture.destroy');
 
     });
+
+
     Route::prefix('password')->group(function () {
         Route::post('/update', [PasswordController::class, 'update'])->name('password.update');
     });
 
+    Route::prefix('attachments')->group(function () {
+        Route::get('/', [AttachmentController::class, 'index'])->name('attachments.index');
+        Route::post('/', [AttachmentController::class, 'store'])->name('attachments.store');
+        Route::get('/{attachment}', [AttachmentController::class, 'show'])->name('attachments.show');
+        Route::delete('/{attachment}', [AttachmentController::class, 'destroy'])->name('attachments.destroy');
+    });
 
     // email verified middleware
     Route::middleware('verified')->group(function () {
