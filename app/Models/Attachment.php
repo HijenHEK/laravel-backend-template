@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Attachment extends Model
 {
@@ -11,6 +12,10 @@ class Attachment extends Model
 
     protected $fillable = [
         'name',
+        'path'
+    ];
+
+    protected $hidden = [
         'path'
     ];
 
@@ -22,6 +27,5 @@ class Attachment extends Model
     public function owner() {
         $this->belongsTo(User::class, 'owner_id');
     }
-
 
 }

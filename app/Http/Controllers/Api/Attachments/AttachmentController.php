@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Attachments;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attachment;
@@ -55,11 +55,14 @@ class AttachmentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Attachment  $attachment
+     * @param  mixed  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Attachment $attachment)
+    public function show($id)
     {
+        $attachment = Attachment::find($id);
+        abort_unless($attachment && $attachment->owner_id === auth()->id(), Response::HTTP_BAD_REQUEST , 'Missing resource or unauthorized action');
+
         return response()->json([
             'message' => 'attachment retrived successfully',
             'file' => $attachment
@@ -69,12 +72,13 @@ class AttachmentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Attachment  $attachment
+     * @param  mixed  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Attachment $attachment)
+    public function destroy($id)
     {
-        abort_unless($attachment->owner_id === auth()->id(), Response::HTTP_UNAUTHORIZED);
+        $attachment = Attachment::find($id);
+        abort_unless($attachment && $attachment->owner_id === auth()->id(), Response::HTTP_BAD_REQUEST , 'Missing resource or unauthorized action');
 
         Storage::delete($attachment->path);
 
