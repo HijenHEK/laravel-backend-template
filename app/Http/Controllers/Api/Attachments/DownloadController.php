@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Attachments;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attachment;
 use Illuminate\Support\Facades\Storage;
 
-class AttachmentDownloadController extends Controller
+class DownloadController extends Controller
 {
     /**
      * Download a file
