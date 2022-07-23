@@ -45,9 +45,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [AttachmentController::class, 'index'])->name('attachments.index');
         Route::post('/', [AttachmentController::class, 'store'])->name('attachments.store');
         Route::get('/download', [DownloadController::class, 'all'])->name('attachments.download.all');
-        Route::get('/{attachment}/download', [DownloadController::class, 'one'])->name('attachments.download.one');
-        Route::get('/{attachment}', [AttachmentController::class, 'show'])->name('attachments.show');
-        Route::delete('/{attachment}', [AttachmentController::class, 'destroy'])->name('attachments.destroy');
+        Route::get('/{id}/download', [DownloadController::class, 'one'])->name('attachments.download.one');
+        Route::get('/{id}', [AttachmentController::class, 'show'])->name('attachments.show');
+        Route::delete('/{id}', [AttachmentController::class, 'destroy'])->name('attachments.destroy');
     });
 
     // email verified middleware

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Attachments;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attachment;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
@@ -70,9 +71,10 @@ class DownloadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function one(Attachment $attachment)
+    public function one($id)
     {
-
+        $attachment = Attachment::find($id);
+        abort_unless($attachment && $attachment->owner_id === auth()->id(), Response::HTTP_BAD_REQUEST , 'Missing resource or unauthorized action');
         if (request()->has('base64')) {
 
             $content = Storage::disk('local')->get($attachment->path);
