@@ -4,16 +4,73 @@ namespace App\Http\Controllers\Api\Attachments;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attachment;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use ZipArchive;
+
+use function PHPUnit\Framework\fileExists;
 
 class DownloadController extends Controller
 {
+
+    /**
+     * Download all current user files
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all()
+    {
+
+
+        if(!auth()->user()->uploads()->count()) {
+            return response()->json([
+                'message' => 'current user has no uploads yet'
+            ], 200);
+        }
+
+        $zip = new ZipArchive;
+
+        $zip_path = storage_path('app/uploads_user_' . auth()->id() . '.zip') ;
+
+
+
+        if ($zip->open($zip_path, ZipArchive::CREATE) === TRUE) {
+
+
+
+
+            foreach (auth()->user()->uploads as $key => $attachment) {
+                if(fileExists(storage_path('app/' . $attachment->path))) {
+
+                    $zip->addFile(storage_path('app/' . $attachment->path), $attachment->name);
+                }
+            }
+
+
+
+            $zip->close();
+        }
+
+        if(! fileExists($zip_path)) {
+            return response()->json([
+                'message' => 'could not generate zip , retry later !'
+            ], 500);
+        }
+
+        return response()->download(
+            $zip_path,
+            now()->format('d_m_y') . '_uploads.zip'
+        )->deleteFileAfterSend();
+    }
+
+
+
     /**
      * Download a file
      *
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Attachment $attachment)
+    public function one(Attachment $attachment)
     {
 
         if (request()->has('base64')) {
