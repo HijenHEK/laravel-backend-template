@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AttachmentController;
+use App\Http\Controllers\Api\AttachmentDownloadController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\ProfileController;
@@ -45,6 +46,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [AttachmentController::class, 'index'])->name('attachments.index');
         Route::post('/', [AttachmentController::class, 'store'])->name('attachments.store');
         Route::get('/{attachment}', [AttachmentController::class, 'show'])->name('attachments.show');
+        Route::get('/{attachment}/download', AttachmentDownloadController::class)->name('attachments.download');
         Route::delete('/{attachment}', [AttachmentController::class, 'destroy'])->name('attachments.destroy');
     });
 
