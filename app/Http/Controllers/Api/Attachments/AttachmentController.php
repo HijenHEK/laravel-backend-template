@@ -61,7 +61,7 @@ class AttachmentController extends Controller
     public function show($id)
     {
         $attachment = Attachment::find($id);
-        abort_unless($attachment && $attachment->owner_id === auth()->id(), Response::HTTP_BAD_REQUEST , 'Missing resource or unauthorized action');
+        abort_unless($attachment && $attachment->owner_id == auth()->id(), Response::HTTP_BAD_REQUEST , 'Missing resource or unauthorized action');
 
         return response()->json([
             'message' => 'attachment retrived successfully',
@@ -78,7 +78,7 @@ class AttachmentController extends Controller
     public function destroy($id)
     {
         $attachment = Attachment::find($id);
-        abort_unless($attachment && $attachment->owner_id === auth()->id(), Response::HTTP_BAD_REQUEST , 'Missing resource or unauthorized action');
+        abort_unless($attachment && $attachment->owner_id == auth()->id(), Response::HTTP_BAD_REQUEST , 'Missing resource or unauthorized action');
 
         Storage::delete($attachment->path);
 

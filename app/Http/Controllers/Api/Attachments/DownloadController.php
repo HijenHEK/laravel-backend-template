@@ -74,7 +74,7 @@ class DownloadController extends Controller
     public function one($id)
     {
         $attachment = Attachment::find($id);
-        abort_unless($attachment && $attachment->owner_id === auth()->id(), Response::HTTP_BAD_REQUEST , 'Missing resource or unauthorized action');
+        abort_unless($attachment && $attachment->owner_id == auth()->id(), Response::HTTP_BAD_REQUEST , 'Missing resource or unauthorized action');
         if (request()->has('base64')) {
 
             $content = Storage::disk('local')->get($attachment->path);
