@@ -150,4 +150,32 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
+
+
+
+    /**
+     * user can download an attachment
+     *
+     * @return void
+     */
+    public function test_a_user_can_download_an_attachment()
+    {
+        $this->actingAs($this->user_1);
+
+        $file = UploadedFile::fake()->image('image.png');
+
+
+        $this->actingAs($this->user_1);
+
+        $response = $this->postJson(route("attachments.store"), [
+            "attachment" => $file
+        ]);
+
+        $attachment = Attachment::find($response->json('attachment')['id']);
+
+        $response = $this->getJson(route("attachments.download.one", $attachment->id) . '?base64');
+
+        $response->assertOk();
+
+    }
 }
