@@ -1,4 +1,6 @@
-# Laravel Backend Boilerplate
+# Laravel Backend Template
+
+#### i use this as a starting point for my backend projects , it saves time with basic auth functionalities and has code examples for repetitive blocks 
 
 ## What is it about ?
 
