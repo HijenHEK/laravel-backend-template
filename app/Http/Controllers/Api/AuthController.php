@@ -58,13 +58,17 @@ class AuthController extends Controller
 
     public function verify(Request $request)
     {
+        $expiration = config('sanctum.expiration');
+
         $token = PersonalAccessToken::findToken(
             explode(' ', $request->header('authorization'))[1]
         );
 
+        $valid = $token && (!$expiration || $token->created_at->gt(now()->subMinutes($expiration)));
+
         return response()->json([
-            'message' => $token ? 'Given token is valid' : 'Given token is invalid'
-        ], $token ? 200 : 400);
+            'message' => $valid ? 'Given token is valid' : 'Given token is invalid'
+        ], $valid ? 200 : 400);
     }
 
     /**
