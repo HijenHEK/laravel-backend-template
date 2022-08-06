@@ -8,6 +8,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -53,6 +54,17 @@ class AuthController extends Controller
                 'token_type' => 'Bearer',
             ]
         ]);
+    }
+
+    public function verify(Request $request)
+    {
+        $token = PersonalAccessToken::findToken(
+            explode(' ', $request->header('authorization'))[1]
+        );
+
+        return response()->json([
+            'message' => $token ? 'Given token is valid' : 'Given token is invalid'
+        ], $token ? 200 : 400);
     }
 
     /**

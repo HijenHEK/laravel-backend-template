@@ -22,7 +22,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::post('/token', [AuthController::class, 'token'])->name('token');
+
+    Route::middleware('throttle:5,1')->group(function() {
+        Route::post('/token', [AuthController::class, 'token'])->name('token');
+        Route::post('/verify', [AuthController::class, 'verify'])->name('verify');
+    });
 
     Route::prefix('profile')->group(function () {
         Route::get('/', [ProfileController::class, 'show'])->name('profile.show');
