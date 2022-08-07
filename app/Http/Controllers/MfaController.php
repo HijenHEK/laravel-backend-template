@@ -11,6 +11,7 @@ class MfaController extends Controller
     public function update(Request $request)
     {
 
+
         $data = $request->validate([
             'active'=> 'required|boolean'
         ]);
@@ -28,6 +29,8 @@ class MfaController extends Controller
     public function verify(Request $request)
     {
 
+        abort_unless($request->user()->isMfaActive() , Response::HTTP_UNAUTHORIZED);
+
         $data = $request->validate([
             'code'=> 'required'
         ]);
@@ -35,6 +38,8 @@ class MfaController extends Controller
         $token = PersonalAccessToken::findToken(
             explode(' ', request()->header('authorization'))[1]
         );
+
+        abort_unless($token->mfa_code , Response::HTTP_UNAUTHORIZED);
 
         abort_if($token->mfa_code != $data['code'] || now()->lt($token->mfa_expires_at), Response::HTTP_BAD_REQUEST , 'Invalid Code');
 
