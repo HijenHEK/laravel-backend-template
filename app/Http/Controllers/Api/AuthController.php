@@ -93,7 +93,7 @@ class AuthController extends Controller
 
 
         return response()->json([
-            'message' => 'user registered successfully'
+            'message' => 'user registered successfully, please check yout inbox and verify your email address !'
         ]);
     }
 
