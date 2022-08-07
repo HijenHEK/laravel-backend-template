@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasMfa;
 use App\Traits\HasPicture;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -12,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, CanResetPassword, HasPicture;
+    use HasApiTokens, HasFactory, Notifiable, CanResetPassword, HasPicture, HasMfa;
 
 
     const ROLE_USER = 0;
