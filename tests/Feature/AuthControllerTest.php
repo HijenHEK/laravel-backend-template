@@ -100,7 +100,7 @@ class AuthControllerTest extends TestCase
 
         $response = $this->postJson(route("token"));
 
-        $response->assertOk();
+        $response->assertOk()->dump();
         $response->assertJsonPath("message" , "Token generated successfully");
 
     }
