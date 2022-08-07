@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\ProfilePictureController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\MfaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::middleware('throttle:5,1')->group(function() {
+    Route::middleware('throttle:5,1')->group(function () {
         Route::post('/token', [AuthController::class, 'token'])->name('token');
         Route::post('/verify', [AuthController::class, 'verify'])->name('verify');
     });
@@ -37,7 +38,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/picture', [ProfilePictureController::class, 'show'])->name('profile.picture.show');
         Route::post('/picture', [ProfilePictureController::class, 'store'])->name('profile.picture.store');
         Route::delete('/picture', [ProfilePictureController::class, 'destroy'])->name('profile.picture.destroy');
-
     });
 
 
@@ -65,6 +65,17 @@ Route::middleware('auth:sanctum')->group(function () {
         })->name('verified.check');
     });
 
+    // mfa verified middleware
+    Route::middleware('mfa')->group(function () {
+
+        // returns verified if user can acceess it
+        Route::get('/mfa-check', function () {
+            return response()->json([
+                'message' => 'mfa verified'
+            ]);
+        })->name('mfa.check');
+    });
+    Route::post('/mfa' , MfaController::class)->name('mfa.toggle');
     // admin middleware group
     Route::middleware('admin')->group(function () {
 
@@ -75,10 +86,8 @@ Route::middleware('auth:sanctum')->group(function () {
             ]);
         })->name('admin.check');
 
-        Route::apiResource('/users' , UserController::class);
+        Route::apiResource('/users', UserController::class);
     });
-
-
 });
 
 Route::middleware('guest:sanctum')->group(function () {

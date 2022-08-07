@@ -14,15 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('personal_access_tokens', function (Blueprint $table) {
-
-            $table->string('mfa_code')->default(
-                (string) rand(100000, 999999)
-            );
-
-            $table->timestamp('mfa_expires_at')->default(
-                now()->addMinutes(config('mfa.expiration'))
-                    ->format('Y-m-d h:i:s')
-            );
+            $table->string('mfa_code')->nullable();
+            $table->timestamp('mfa_expires_at')->nullable();
         });
     }
 
