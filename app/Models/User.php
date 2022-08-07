@@ -94,10 +94,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
         if ($this->isMfaActive()) {
-            $token->mfa_code = $this->mfa_code = (string) rand(100000, 999999);
+            $token->mfa_code = (string) rand(100000, 999999);
             $token->mfa_expires_at = now()->addMinutes(config('mfa.expiration'))
                 ->format('Y-m-d h:i:s');
             $token->save();
+
+            $this->sendMfaCode($token);
         }
 
         return new NewAccessToken($token, $token->getKey() . '|' . $plainTextToken);

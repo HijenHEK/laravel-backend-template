@@ -75,7 +75,8 @@ Route::middleware('auth:sanctum')->group(function () {
             ]);
         })->name('mfa.check');
     });
-    Route::post('/mfa' , MfaController::class)->name('mfa.toggle');
+    Route::put('/mfa' , [MfaController::class ,'update'])->name('mfa.update');
+    Route::post('/mfa' , [MfaController::class ,'verify'])->name('mfa.verify');
     // admin middleware group
     Route::middleware('admin')->group(function () {
 
