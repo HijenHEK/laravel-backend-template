@@ -10,7 +10,7 @@ trait HasMfa
 {
     protected $mfa_code ;
 
-    public function isMfaActive(): bool
+    public function isMfaActive(): bool | null
     {
         return $this->mfa;
     }
