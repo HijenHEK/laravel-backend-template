@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Mail\MfaMail;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Sanctum\PersonalAccessToken;
 
@@ -17,19 +18,13 @@ trait HasMfa
 
     public function isMfaVerified(): bool | null
     {
-        $token = PersonalAccessToken::findToken(
-            explode(' ', request()->header('authorization'))[1]
-        );
+        $token = request()->user()->currentAccessToken();
 
         return !$token->mfa_code;
     }
 
-    public function sendMfaCode($token = null)
+    public function sendMfaCode($token)
     {
-
-        $token = $token ?? PersonalAccessToken::findToken(
-            explode(' ', request()->header('authorization'))[1]
-        );
 
         if(!$token->mfa_code) return;
 

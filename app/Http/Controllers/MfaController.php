@@ -35,9 +35,7 @@ class MfaController extends Controller
             'code'=> 'required'
         ]);
 
-        $token = PersonalAccessToken::findToken(
-            explode(' ', request()->header('authorization'))[1]
-        );
+        $token = $request->user()->currentAccessToken();
 
         abort_unless($token->mfa_code , Response::HTTP_UNAUTHORIZED);
 
