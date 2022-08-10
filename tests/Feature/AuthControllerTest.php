@@ -84,11 +84,28 @@ class AuthControllerTest extends TestCase
 
         $response->assertOk();
 
-        $response->assertJsonPath("message" , "user logged in successfully");
-
+        $response->assertJsonPath("message", "user logged in successfully");
     }
 
-        /**
+    /**
+     * Verify Token test
+     *
+     * @return void
+     */
+    public function test_user_can_verify_his_current_token()
+    {
+        $user = User::factory()->create();
+
+        $token = $user->createToken('auth-token')->plainTextToken;
+
+        $response = $this->postJson(route("verify"), [],[
+            'Authorization' => 'Bearer ' . $token
+        ]);
+
+        $response->assertOk();
+    }
+
+    /**
      * Token test
      *
      * @return void
@@ -100,9 +117,8 @@ class AuthControllerTest extends TestCase
 
         $response = $this->postJson(route("token"));
 
-        $response->assertOk()->dump();
-        $response->assertJsonPath("message" , "Token generated successfully");
-
+        $response->assertOk();
+        $response->assertJsonPath("message", "Token generated successfully");
     }
 
     /**
@@ -117,13 +133,12 @@ class AuthControllerTest extends TestCase
 
         $token = $user->createToken('auth-token')->plainTextToken;
 
-        $response = $this->postJson(route("logout"),[],[
-            'Authorization' => 'Bearer '.$token
+        $response = $this->postJson(route("logout"), [], [
+            'Authorization' => 'Bearer ' . $token
         ]);
 
         $response->assertOk();
 
-        $response->assertJsonPath("message" , "user logged out successfully");
-
+        $response->assertJsonPath("message", "user logged out successfully");
     }
 }

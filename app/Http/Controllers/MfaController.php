@@ -26,6 +26,9 @@ class MfaController extends Controller
         ]);
     }
 
+    /**
+     *  user authenticate by verifying the mfa code here
+     */
     public function verify(Request $request)
     {
 

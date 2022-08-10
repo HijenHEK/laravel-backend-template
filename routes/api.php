@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware('throttle:5,1')->post('/verify', [AuthController::class, 'verify'])->name('verify');
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
