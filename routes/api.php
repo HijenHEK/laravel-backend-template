@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Profile\ProfileController;
 use App\Http\Controllers\Api\Profile\ProfilePictureController;
 use App\Http\Controllers\Api\Profile\UserController;
 use App\Http\Controllers\Api\Authentication\MfaController;
+use App\Http\Controllers\Api\Authentication\PasswordResetController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('throttle:5,1')->post('/verify', [AuthController::class, 'verify'])->name('verify');
+
+Route::middleware('guest')->group(function () {
+    Route::post('/forgot-passwoird', [PasswordResetController::class , 'send'])->name('password.email');
+    Route::post('/reset-password', [PasswordResetController::class , 'reset'])->name('password.reset');
+});
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
