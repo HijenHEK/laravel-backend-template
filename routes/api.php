@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\Api\Attachments\AttachmentController;
 use App\Http\Controllers\Api\Attachments\DownloadController;
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\PasswordController;
-use App\Http\Controllers\Api\ProfileController;
-use App\Http\Controllers\Api\ProfilePictureController;
-use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\MfaController;
+use App\Http\Controllers\Api\Authentication\AuthController;
+use App\Http\Controllers\Api\Profile\PasswordController;
+use App\Http\Controllers\Api\Profile\ProfileController;
+use App\Http\Controllers\Api\Profile\ProfilePictureController;
+use App\Http\Controllers\Api\Profile\UserController;
+use App\Http\Controllers\Api\Authentication\MfaController;
 use Illuminate\Support\Facades\Route;
 
 /*
