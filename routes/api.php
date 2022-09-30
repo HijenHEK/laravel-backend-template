@@ -29,7 +29,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/reset-password', [PasswordResetController::class , 'reset'])->name('password.reset');
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::middleware('throttle:5,1')->group(function () {
@@ -99,7 +99,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-Route::middleware('guest:sanctum')->group(function () {
+Route::middleware('guest:api')->group(function () {
     Route::prefix('password')->group(function () {
         Route::post('/forgot', [PasswordController::class, 'forgot'])->name('password.forgot');
         Route::post('/reset', [PasswordController::class, 'reset'])->name('password.reset');
@@ -107,3 +107,21 @@ Route::middleware('guest:sanctum')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
 });
+
+
+
+Route::prefix('admin')->group(function(){
+    Route::middleware('guest:admin-api')->group(function () {
+        Route::prefix('password')->group(function () {
+            Route::post('/forgot', [PasswordController::class, 'forgot'])->name('password.forgot');
+            Route::post('/reset', [PasswordController::class, 'reset'])->name('password.reset');
+        });
+        Route::post('/login', [AuthController::class, 'login'])->name('login');
+        Route::post('/register', [AuthController::class, 'register'])->name('register');
+    });
+});
+
+
+
+
+
