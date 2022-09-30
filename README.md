@@ -20,6 +20,13 @@ A front end agnostic ready to use boilerplate for your next Mobile app or SPA
 - [x] MFA
 - [ ] social login
 
+## Admin provider Todo
+
+- [x] seperate admin provider (under feature/admin-provider)
+- [x] authentication system
+- [ ] admin profile
+- [ ] clean main roles system
+
 you can add suggestions by modifying this file :) 
 
 ## Installation 
