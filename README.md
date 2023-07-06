@@ -31,6 +31,7 @@ you can add suggestions by modifying this file :)
 
 ## Installation 
 
+
 ### Docker ?
 
 if you have docker installed , all you have to do is running 
@@ -73,4 +74,8 @@ and the app will be accessible by default via `localhost:8000`
 ```shell
 $ php artisan test
 ```
+### Api Documentaion ?
 
+```
+/insomnia
+```
