@@ -43,7 +43,7 @@ class MfaController extends Controller
 
         abort_unless($token->mfa_code , Response::HTTP_UNAUTHORIZED);
 
-        abort_if($token->mfa_code != $data['code'] || now()->lt($token->mfa_expires_at), Response::HTTP_BAD_REQUEST , 'Invalid Code');
+        abort_if($token->mfa_code != $data['code'] || now()->gt($token->mfa_expires_at), Response::HTTP_BAD_REQUEST , 'Invalid Code');
 
         $token->mfa_code = null;
         $token->mfa_expires_at = null;
