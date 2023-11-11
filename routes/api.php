@@ -28,9 +28,22 @@ Route::middleware('guest')->group(function () {
     Route::post('/forgot-password', [PasswordResetController::class , 'send'])->name('password.email');
     Route::post('/reset-password', [PasswordResetController::class , 'reset'])->name('password.reset');
 });
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    // mfa verified middleware
+    Route::middleware('mfa')->group(function () {
+
+        // returns verified if user can acceess it
+        Route::get('/mfa-check', function () {
+            return response()->json([
+                'message' => 'mfa verified'
+            ]);
+        })->name('mfa.check');
+    });
+    Route::post('/mfa' , [MfaController::class ,'verify'])->name('mfa.verify');
+});
+
+Route::middleware(['auth:sanctum', 'mfa'])->group(function () {
 
     Route::middleware('throttle:5,1')->group(function () {
         Route::post('/token', [AuthController::class, 'token'])->name('token');
@@ -73,18 +86,8 @@ Route::middleware('auth:sanctum')->group(function () {
         })->name('verified.check');
     });
 
-    // mfa verified middleware
-    Route::middleware('mfa')->group(function () {
 
-        // returns verified if user can acceess it
-        Route::get('/mfa-check', function () {
-            return response()->json([
-                'message' => 'mfa verified'
-            ]);
-        })->name('mfa.check');
-    });
     Route::put('/mfa' , [MfaController::class ,'update'])->name('mfa.update');
-    Route::post('/mfa' , [MfaController::class ,'verify'])->name('mfa.verify');
     // admin middleware group
     Route::middleware('admin')->group(function () {
 

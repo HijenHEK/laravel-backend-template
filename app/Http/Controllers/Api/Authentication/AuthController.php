@@ -34,7 +34,8 @@ class AuthController extends Controller
         $token = auth()->user()->createToken('auth-token')->plainTextToken;
 
         return response()->json([
-            'message' => 'user logged in successfully',
+            'message' => auth()->user()->isMfaActive() ? 'mfa code has been sent' : 'user logged in successfully',
+            'mfa' => auth()->user()->isMfaActive(),
             'data' => [
                 'access_token' => $token,
                 'token_type' => 'Bearer',
