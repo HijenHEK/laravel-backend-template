@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('throttle:5,1')->post('/verify', [AuthController::class, 'verify'])->name('verify');
+Route::middleware('throttle:5,1')->post('/profile/verify', [AuthController::class, 'verify'])->name('verify');
 
 Route::middleware('guest')->group(function () {
     Route::post('/forgot-password', [PasswordResetController::class, 'send'])->name('password.email');
