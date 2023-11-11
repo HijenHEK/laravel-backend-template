@@ -43,7 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/mfa' , [MfaController::class ,'verify'])->name('mfa.verify');
 });
 
-Route::middleware(['auth:sanctum', 'mfa'])->group(function () {
+Route::middleware(['auth:sanctum', 'mfa', 'verified'])->group(function () {
 
     Route::middleware('throttle:5,1')->group(function () {
         Route::post('/token', [AuthController::class, 'token'])->name('token');
