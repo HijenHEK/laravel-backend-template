@@ -25,8 +25,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('throttle:5,1')->post('/verify', [AuthController::class, 'verify'])->name('verify');
 
 Route::middleware('guest')->group(function () {
-    Route::post('/forgot-password', [PasswordResetController::class , 'send'])->name('password.email');
-    Route::post('/reset-password', [PasswordResetController::class , 'reset'])->name('password.reset');
+    Route::post('/forgot-password', [PasswordResetController::class, 'send'])->name('password.email');
+    Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name('password.reset');
 });
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -40,21 +40,33 @@ Route::middleware('auth:sanctum')->group(function () {
             ]);
         })->name('mfa.check');
     });
-    Route::post('/mfa' , [MfaController::class ,'verify'])->name('mfa.verify');
+    Route::post('/mfa', [MfaController::class, 'verify'])->name('mfa.verify');
+    Route::middleware('throttle:5,1')->group(function () {
+        Route::post('/token', [AuthController::class, 'token'])->name('token');
+        Route::post('/verify', [AuthController::class, 'verify'])->name('verify');
+        Route::get('/verify/{id}/{hash}', [ProfileController::class, 'verify'])->name('verification.verify');
+
+    });
+    // email verified middleware
+    Route::middleware('verified')->group(function () {
+
+        // returns verified if user can acceess it
+        Route::get('/verified', function () {
+            return response()->json([
+                'message' => 'verified'
+            ]);
+        })->name('verified.check');
+    });
 });
 
 Route::middleware(['auth:sanctum', 'mfa', 'verified'])->group(function () {
 
-    Route::middleware('throttle:5,1')->group(function () {
-        Route::post('/token', [AuthController::class, 'token'])->name('token');
-        Route::post('/verify', [AuthController::class, 'verify'])->name('verify');
-    });
+
 
     Route::prefix('profile')->group(function () {
         Route::get('/', [ProfileController::class, 'show'])->name('profile.show');
         Route::post('/update', [ProfileController::class, 'update'])->name('profile.update');
         Route::post('/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
-        Route::get('/verify/{id}/{hash}', [ProfileController::class, 'verify'])->name('verification.verify');
 
         Route::get('/picture', [ProfilePictureController::class, 'show'])->name('profile.picture.show');
         Route::post('/picture', [ProfilePictureController::class, 'store'])->name('profile.picture.store');
@@ -75,19 +87,10 @@ Route::middleware(['auth:sanctum', 'mfa', 'verified'])->group(function () {
         Route::delete('/{id}', [AttachmentController::class, 'destroy'])->name('attachments.destroy');
     });
 
-    // email verified middleware
-    Route::middleware('verified')->group(function () {
-
-        // returns verified if user can acceess it
-        Route::get('/verified', function () {
-            return response()->json([
-                'message' => 'verified'
-            ]);
-        })->name('verified.check');
-    });
 
 
-    Route::put('/mfa' , [MfaController::class ,'update'])->name('mfa.update');
+
+    Route::put('/mfa', [MfaController::class, 'update'])->name('mfa.update');
     // admin middleware group
     Route::middleware('admin')->group(function () {
 
