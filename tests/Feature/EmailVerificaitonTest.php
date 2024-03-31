@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
 
-class EmailVerificationTest extends TestCase
+class EmailVerificaitonTest extends TestCase
 {
     /**
      * verify registered profile
