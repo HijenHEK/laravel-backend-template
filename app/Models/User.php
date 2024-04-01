@@ -73,11 +73,11 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function uploads()
     {
-        return $this->hasMany(Attachment::class , 'owner_id');
+        return $this->hasMany(Attachment::class, 'owner_id');
     }
 
 
-        /**
+    /**
      * Create a new personal access token for the user.
      * -- Overrides HasApiToken method
      * @param  string  $name
@@ -103,5 +103,10 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return new NewAccessToken($token, $token->getKey() . '|' . $plainTextToken);
+    }
+
+    public function getAuthPasswordName()
+    {
+        return 'password';
     }
 }
