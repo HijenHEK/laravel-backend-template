@@ -20,11 +20,19 @@ A front end agnostic ready to use boilerplate for your next Mobile app or SPA
 - [x] MFA
 - [ ] social login
 
+## Admin provider Todo
+
+- [x] seperate admin provider (under feature/admin-provider)
+- [x] authentication system
+- [ ] admin profile
+- [ ] clean main roles system
+
 you can add suggestions by modifying this file :) 
 
 ## Installation 
 
-#### Docker ?
+
+### Docker ?
 
 if you have docker installed , all you have to do is running 
 
@@ -38,7 +46,7 @@ $ ./vendor/bin/sail/up
 
 and the app will be accessible by default via `localhost` as programmed in `docker-compose.yml`
 
-#### locally ?
+### locally ?
 
 you need to have 
 
@@ -61,3 +69,13 @@ $ php artisan serve
 
 and the app will be accessible by default via `localhost:8000` 
 
+## Testing
+
+```shell
+$ php artisan test
+```
+### Api Documentaion ?
+
+```
+/insomnia
+```
