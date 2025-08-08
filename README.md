@@ -2,7 +2,7 @@
 
 #### i use this as a starting point for my backend projects , it saves time with basic auth functionalities and has code examples for repetitive blocks 
 
-## What is it about ?
+## What it is about ?
 
 this is an API First Backend developed using laravel mysql and sacntum for authentification </br>
 A front end agnostic ready to use boilerplate for your next Mobile app or SPA
