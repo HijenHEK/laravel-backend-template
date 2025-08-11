@@ -35,11 +35,11 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => auth()->user()->isMfaActive() ? 'mfa code has been sent' : 'user logged in successfully',
-            'mfa' => auth()->user()->isMfaActive(),
-            'verified' => auth()->user()->hasVerifiedEmail(),
             'data' => [
                 'access_token' => $token,
                 'token_type' => 'Bearer',
+                'mfa' => auth()->user()->isMfaActive(),
+                'verified' => auth()->user()->hasVerifiedEmail(),
             ]
         ]);
     }
@@ -67,7 +67,7 @@ class AuthController extends Controller
         $valid = !$expiration || $token->created_at->gt(now()->subMinutes($expiration));
 
         return response()->json([
-            'message' => $valid ? 'Given token is valid' : 'Given token is invalid'
+            'message' => $valid ? 'Given token is valid' : 'Given token is invalid',
         ], $valid ? 200 : 400);
     }
 
